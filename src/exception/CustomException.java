@@ -1,9 +1,4 @@
 package exception;
-import java.io.*;
-import java.util.*;
-import driver.*;
-import model.*;
-import util.*;
 //RuntimeException: In Java, there are two types of exceptions: checked exceptions and un-checked 
 //exceptions.A checked exception must be handled explicitly by the code, whereas, an un-checked
 //exception does not need to be explicitly handled.
@@ -25,46 +20,31 @@ public class CustomException extends Exception {
 		printmyproblem();
 	}
 	
-	public void printmyproblem()
+	public String printmyproblem()
 	{
+		Fix1to100 FixFile = new Fix1to100();
+
 		switch(errornum)
 		{
 			case 1:
-				System.out.println(message);
-				break;
+				return FixFile.fixerror1();
 			case 2:
 				System.out.println(message);
-				break;				
+				return "";
 			case 3:
 				System.out.println(message);
-				break;
+				return "";
 			case 4:
 				System.out.println(message);
-				break;
+				return "";
 			case 5:
-				boolean flag = false;
-				String file;
-				System.out.printf("%s", "Enter filename: ");
-				Scanner input = new Scanner(System.in);
-				file = input.nextLine();
-				while(flag == false)
-				{
-					System.out.println("Wrong filename!");
-					System.out.printf("%s", "Please enter filename again: ");
-					file = input.nextLine();
-					if(file.equals("data.txt"))
-					{
-						flag = true;
-					}
-				}
-				file = "C:\\Users\\Tri Doan\\eclipse-workspace\\Assignment 2_CIS35B\\src\\data.txt";
-				input.close();
-				break;
+				String newfilename = FixFile.fixfilename();
+				return newfilename;
 			case 6:
 				System.out.println(message);
-				break;
+				return "";
 			default:
-				break;
+				return "";
 		}
 	}
 }

@@ -14,105 +14,109 @@ public class FileIO {
 	public Automobile buildAutomotiveObject(String filename, Automobile Car) throws CustomException
 	{
 		try {
-		FileReader file = new FileReader(filename);
-		BufferedReader buff = new BufferedReader(file);
-		boolean eof = false;
-		int counter = 0;	
-		int index2 = 0;
-		int index3 = 0;
-		int index4 = 0;
-
-		while(!eof)
-		{
-			counter++;
-			String line = buff.readLine();
-			 if (line == null)
-			 {
-				 eof = true;
-			 }
-
-			 //get OptionSet name
-			 else if(counter == 1 || counter == 5 || counter == 9|| counter == 13 || counter == 17)
-			 {
-				 Car.setNameForOptionSet(line, index2);
-				 index2++;
-			 }
-			 
-			 //get array size of options
-			 else if(counter == 2 || counter ==6 || counter == 10 || counter == 14 || counter == 18)
-			 {
-				 if(counter == 2)
+			FileReader file = new FileReader(filename);
+			BufferedReader buff = new BufferedReader(file);
+			boolean eof = false;
+			int counter = 0;	
+			int index2 = 0;
+			int index3 = 0;
+			int index4 = 0;
+	
+			while(!eof)
+			{
+				counter++;
+				String line = buff.readLine();
+				 if (line == null)
 				 {
-					 int i = Integer.parseInt(line);
-						Car.createOption(i, 0);
+					 eof = true;
 				 }
-				 else if (counter == 6)
+	
+				 //get OptionSet name
+				 else if(counter == 1 || counter == 5 || counter == 9|| counter == 13 || counter == 17)
 				 {
-					 int i = Integer.parseInt(line);
-						Car.createOption(i, 1);
+					 Car.setNameForOptionSet(line, index2);
+					 index2++;
 				 }
-				 else if (counter == 10)
+				 
+				 //get array size of options
+				 else if(counter == 2 || counter ==6 || counter == 10 || counter == 14 || counter == 18)
 				 {
-					 int i = Integer.parseInt(line);
-						Car.createOption(i, 2);
+					 if(counter == 2)
+					 {
+						 int i = Integer.parseInt(line);
+							Car.createOption(i, 0);
+					 }
+					 else if (counter == 6)
+					 {
+						 int i = Integer.parseInt(line);
+							Car.createOption(i, 1);
+					 }
+					 else if (counter == 10)
+					 {
+						 int i = Integer.parseInt(line);
+							Car.createOption(i, 2);
+					 }
+					 else if (counter == 14)
+					 {
+						 int i = Integer.parseInt(line);
+							Car.createOption(i, 3);
+					 }
+					 else if (counter == 18)
+					 {
+						 int i = Integer.parseInt(line);
+							Car.createOption(i, 4);
+					 }
 				 }
-				 else if (counter == 14)
+				 
+				 //get option name
+				 else if(counter == 3 || counter == 7 || counter == 11 || counter == 15 || counter == 19)
 				 {
-					 int i = Integer.parseInt(line);
-						Car.createOption(i, 3);
+					 int temp = 0;
+					 StringTokenizer stringtoken = new StringTokenizer(line, ",");
+					 while(stringtoken.hasMoreTokens())
+					 {
+						String str = stringtoken.nextToken();
+						Car.setNameForOption(str, index3, temp);
+						 temp++;
+					 }
+					index3++;
 				 }
-				 else if (counter == 18)
+				 
+				 //get option price 
+				 else if(counter == 4 || counter == 8 || counter == 12 || counter == 16 || counter == 20)
 				 {
-					 int i = Integer.parseInt(line);
-						Car.createOption(i, 4);
+					 int temp = 0;
+					 StringTokenizer stringtoken = new StringTokenizer(line, ",");
+					 while(stringtoken.hasMoreTokens())
+					 {
+						 String str = stringtoken.nextToken();
+						 float i = Float.parseFloat(str);
+						 Car.setPriceForOption(i, index4, temp);
+						 temp++;
+					 }
+					 index4++;
 				 }
-			 }
-			 
-			 //get option name
-			 else if(counter == 3 || counter == 7 || counter == 11 || counter == 15 || counter == 19)
-			 {
-				 int temp = 0;
-				 StringTokenizer stringtoken = new StringTokenizer(line, ",");
-				 while(stringtoken.hasMoreTokens())
-				 {
-					String str = stringtoken.nextToken();
-					Car.setNameForOption(str, index3, temp);
-					 temp++;
-				 }
-				index3++;
-			 }
-			 
-			 //get option price 
-			 else if(counter == 4 || counter == 8 || counter == 12 || counter == 16 || counter == 20)
-			 {
-				 int temp = 0;
-				 StringTokenizer stringtoken = new StringTokenizer(line, ",");
-				 while(stringtoken.hasMoreTokens())
-				 {
-					 String str = stringtoken.nextToken();
-					 float i = Float.parseFloat(str);
-					 Car.setPriceForOption(i, index4, temp);
-					 temp++;
-				 }
-				 index4++;
-			 }
-		}
-		file.close();
-		buff.close();
-
-		}catch(ArrayIndexOutOfBoundsException e)
-		{
-			throw new CustomException(3, "Array Index Out Of Bounds");
-        }
-		catch(NullPointerException e)
-		{
-			throw new CustomException(4, "Null Pointer Exception");
-        }
-		catch(IOException e)
-		{
-			throw new CustomException(5, "File Does Not Existed");
-        }
-		return null;
+			}
+			file.close();
+			buff.close();
+	
+			}catch(ArrayIndexOutOfBoundsException e)
+			{
+				throw new CustomException(3, "Array Index Out Of Bounds");
+	        }
+			catch(NullPointerException e)
+			{
+				throw new CustomException(4, "Null Pointer Exception");
+	        }
+			catch(IOException e)
+			{
+				throw new CustomException(5, "File Does Not Existed");
+	        }
+			catch(NoSuchElementException e)
+			{
+				throw new CustomException(6, "Array index out of bound");
+			}
+	return Car;
 	}
 	
 	/*
